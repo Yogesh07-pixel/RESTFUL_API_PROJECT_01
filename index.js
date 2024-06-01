@@ -8,6 +8,14 @@ const port = 8080;
 // Middleware - Plugin
 app.use(express.urlencoded({extended : false}));
 
+app.use((req,res,next) =>{
+  fs.appendFile("log.txt", 
+  `\n${Date.now()} : ${req.ip} : ${req.method} : ${req.path}\n`, (err , data) => {
+    next();  
+  });
+});
+
+
 // Root Route
 app.get("/users", (req, res) => {
   const html = `
